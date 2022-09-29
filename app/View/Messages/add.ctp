@@ -3,9 +3,10 @@
 	<fieldset>
 		<legend><?php echo __('Add Message'); ?></legend>
 	<?php
-		echo $this->Form->input('user_id');
+		echo $this->Form->input('sender_user_id');
 		echo $this->Form->input('content');
 		echo $this->Form->input('is_deleted_message');
+		echo $this->Form->input('destinetion_user_id');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

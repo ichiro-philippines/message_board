@@ -26,6 +26,7 @@
 Cache::config('default', array('engine' => 'File'));
 CakePlugin::load('DebugKit');
 CakePlugin::loadAll();
+Configure::load('master');
 /**
  * The settings below can be used to set additional paths to models, views and controllers.
  *

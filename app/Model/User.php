@@ -15,12 +15,19 @@ class User extends AppModel {
 	public $displayField = 'name';
 
 	public function confirmPassword($field, $password) {
-		var_dump($field);
-		var_dump($this->data);exit;
         if ($field['confirm_password'] === $this->data[$this->name][$password]) {
             return true;
         }
     }
+	function updateLastLogin($id) {
+		$this->id = $id;
+		$data = array(
+				'last_login_time' => date('Y-m-d H:i:s'),
+				'modified' => false
+				);
+		return $this->save($data);
+	}
+	
 /**
  * Validation rules
  *
@@ -30,21 +37,11 @@ class User extends AppModel {
 		'id' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'name' => array(
+		'username' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				'required' => true,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 			'lengthBetween' => array(
 				'rule' => array('lengthBetween', 5, 20),
@@ -54,25 +51,19 @@ class User extends AppModel {
 		'email' => array(
 			'email' => array(
 				'rule' => array('email'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 			'isUnique' => array(
 				'rule' => array('isUnique'),
 				'message' => 'Duplicate email address.',
+			),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 			),
 		),
 		'password' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
 			),
-			// 'match' => array( 
-			// 	'rule' => array('confirmPassword', 'confirm_password'),
-			// 	'message' => 'Passwords do not match'
-			// ),
 		),
         'confirm_password' => array(
 			'match' => array( 
@@ -83,13 +74,24 @@ class User extends AppModel {
 		'picture' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'birthdate' => array(
+			'notBlank' => array(
+				'rule' => array('notBlank'),
+			),
+		),
+		'gender' => array(
+			'notBlank' => array(
+				'rule' => array('notBlank'),
+			),
+		),
+		'hobby' => array(
+			'notBlank' => array(
+				'rule' => array('notBlank'),
+			),
+		),
+
 	);
 
 	// The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -102,7 +104,7 @@ class User extends AppModel {
 	public $hasMany = array(
 		'Message' => array(
 			'className' => 'Message',
-			'foreignKey' => 'user_id',
+			'foreignKey' => 'sender_user_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',

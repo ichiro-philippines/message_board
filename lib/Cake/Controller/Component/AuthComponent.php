@@ -607,7 +607,7 @@ class AuthComponent extends Component {
  */
 	public function login($user = null) {
 		$this->_setDefaults();
-
+		
 		if (empty($user)) {
 			$user = $this->identify($this->request, $this->response);
 		}
@@ -668,6 +668,7 @@ class AuthComponent extends Component {
 		if (!empty(static::$_user)) {
 			$user = static::$_user;
 		} elseif (static::$sessionKey && CakeSession::check(static::$sessionKey)) {
+			// var_dump('haitta');exit;
 			$user = CakeSession::read(static::$sessionKey);
 		} else {
 			return null;
@@ -770,6 +771,7 @@ class AuthComponent extends Component {
 		}
 		foreach ($this->_authenticateObjects as $auth) {
 			$result = $auth->authenticate($request, $response);
+			
 			if (!empty($result) && is_array($result)) {
 				return $result;
 			}

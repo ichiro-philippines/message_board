@@ -42,6 +42,7 @@ abstract class BaseAuthenticate implements CakeEventListener {
 	public $settings = array(
 		'fields' => array(
 			'username' => 'username',
+			'email' => 'email',
 			'password' => 'password'
 		),
 		'userModel' => 'User',
@@ -100,16 +101,15 @@ abstract class BaseAuthenticate implements CakeEventListener {
  * @param string $password The password, only used if $username param is string.
  * @return bool|array Either false on failure, or an array of user data.
  */
-	protected function _findUser($username, $password = null) {
+	protected function _findUser($email, $password = null) {
 		$userModel = $this->settings['userModel'];
 		list(, $model) = pluginSplit($userModel);
 		$fields = $this->settings['fields'];
-
-		if (is_array($username)) {
-			$conditions = $username;
+		if (is_array($email)) {
+			$conditions = $email;
 		} else {
 			$conditions = array(
-				$model . '.' . $fields['username'] => $username
+				$model . '.' . $fields['email'] => $email
 			);
 		}
 

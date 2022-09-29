@@ -1743,7 +1743,7 @@ class Model extends CakeObject implements CakeEventListener {
 			'callbacks' => true, 'counterCache' => true,
 			'atomic' => true
 		);
-
+		
 		if (!is_array($validate)) {
 			$options = compact('validate', 'fieldList') + $defaults;
 		} else {
@@ -1753,7 +1753,7 @@ class Model extends CakeObject implements CakeEventListener {
 		if (!$options['atomic']) {
 			return $this->_doSave($data, $options);
 		}
-
+		
 		$db = $this->getDataSource();
 		$transactionBegun = $db->begin();
 		try {
@@ -1794,7 +1794,6 @@ class Model extends CakeObject implements CakeEventListener {
 	protected function _doSave($data = null, $options = array()) {
 		$_whitelist = $this->whitelist;
 		$fields = array();
-
 		if (!empty($options['fieldList'])) {
 			if (!empty($options['fieldList'][$this->alias]) && is_array($options['fieldList'][$this->alias])) {
 				$this->whitelist = $options['fieldList'][$this->alias];

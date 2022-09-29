@@ -6,9 +6,9 @@
 			<?php echo h($message['Message']['id']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('User'); ?></dt>
+		<dt><?php echo __('Sender User Id'); ?></dt>
 		<dd>
-			<?php echo $this->Html->link($message['User']['name'], array('controller' => 'users', 'action' => 'view', $message['User']['id'])); ?>
+			<?php echo h($message['Message']['sender_user_id']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Content'); ?></dt>
@@ -21,14 +21,19 @@
 			<?php echo h($message['Message']['is_deleted_message']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Destinetion User Id'); ?></dt>
+		<dd>
+			<?php echo h($message['Message']['destinetion_user_id']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($message['Message']['created']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Updated'); ?></dt>
+		<dt><?php echo __('Modified'); ?></dt>
 		<dd>
-			<?php echo h($message['Message']['updated']); ?>
+			<?php echo h($message['Message']['modified']); ?>
 			&nbsp;
 		</dd>
 	</dl>

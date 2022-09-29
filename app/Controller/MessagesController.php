@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('UserController', 'Controller');
+
 /**
  * Messages Controller
  *
@@ -23,6 +25,20 @@ class MessagesController extends AppController {
 	public function index() {
 		$this->Message->recursive = 0;
 		$this->set('messages', $this->Paginator->paginate());
+	}
+
+	public function list() {
+		$userId = $this->Auth->user('id');
+		$data = $this->Message->findAllBySenderUserId($userId);
+		$destinetion_user_id = [];
+		foreach ($data as $key => $val) {
+			$destinetion_user_id[] = array_column($data[$key], 'destinetion_user_id');
+		}
+		
+		var_dump($destinetion_user_id);exit;
+		// var_dump($data[0]['Message']['destinetion_user_id']);exit;
+		// $data = $this->Message->findAllByDestinetionUserId($data[0]['Message']['destinetion_user_id']);
+		$this->set('message', $data);
 	}
 
 /**
