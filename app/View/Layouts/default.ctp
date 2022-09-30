@@ -34,17 +34,32 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+	<!-- Select2.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css">
+
 </head>
 <body>
 	<div id="container">
 		<div id="header">
 			<h1>
 				<?php 
-					echo $this->HTML->link('Logout',
+					if (AuthComponent::user()) {
+						echo $this->HTML->link('Logout',
+						array(
+							'controller' => 'users',
+							'action' => 'logout'
+						));
+				} else {
+					echo $this->HTML->link('Login',
 					array(
 						'controller' => 'users',
-						'action' => 'logout'
-					)); 
+						'action' => 'login'
+					)) . ' or ' . $this->HTML->link('Register',
+					array(
+						'controller' => 'users',
+						'action' => 'add'
+					));
+				}
 				?>
 			</h1>
 			<?php 

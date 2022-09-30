@@ -31,7 +31,7 @@ class UsersController extends AppController {
 				if (empty($data['User']['picture'])) {
 					return $this->redirect('/users/addprofile');
 				} else {
-					return $this->redirect('/users/profile');
+					return $this->redirect('/messages/list');
 				}
 				
 			} else {

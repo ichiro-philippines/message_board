@@ -1,0 +1,78 @@
+.message-box {
+    display: flex;
+    border: solid 1px #000000;
+    margin-bottom: 2px;
+    width: 500px;
+}
+.message-box-left {
+    width: 110px;
+}
+.message-box-left img {
+    width: 100px;
+    height: 100px;
+}
+.message-box-right {
+    margin-left: 3px;
+    width: 100%;
+}
+.massge-box-content {
+    height: 70px;
+}
+.massge-box-content .content{
+    height: 50px;
+}
+.message-create-date {
+    text-align: right;
+}
+.list-item-list {
+    margin-bottom: 13.7px;
+}
+
+/* detail */
+ul {
+    list-style-type: none
+}
+.detail-box {
+    margin-left: 150px;
+}
+.list-item{
+    opacity: 1;
+}
+
+.list-item.is-hidden {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+}
+.list-btn {
+    margin-top: 20px;
+    position: relative;
+    background-color: #333;
+    /* ここはボタン位置がわかりやすいように設定しています */
+    /* background-color: aqua; */
+    height: 50px;
+    width: 200px;
+}
+.list-btn.is-btn-hidden{
+  display:none;
+}
+.list-btn button {
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    /* buttonのスタイル削除 */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    appearance: none;
+}
+.display-none {
+    /* visibility:hidden; */
+    display: none;
+   }

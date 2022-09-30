@@ -14,6 +14,11 @@ class Message extends AppModel {
  * @var array
  */
 	public $validate = array(
+		'id' => array(
+			'notBlank' => array(
+				'rule' => array('notBlank'),
+			),
+		),
 		'sender_user_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -44,7 +49,7 @@ class Message extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'destinetion_user_id' => array(
+		'destination_user_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',

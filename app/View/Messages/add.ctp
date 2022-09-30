@@ -1,22 +1,36 @@
+<style>
+	body {
+		color: unset;
+	}
+</style>
 <div class="messages form">
 <?php echo $this->Form->create('Message'); ?>
 	<fieldset>
-		<legend><?php echo __('Add Message'); ?></legend>
+		<legend><?php echo __('New Message'); ?></legend>
 	<?php
-		echo $this->Form->input('sender_user_id');
+		echo $this->Form->input('sender_user_id',array(
+		'type' => 'hidden',
+		'value' => AuthComponent::user('id')
+	    ));
+		echo $this->Form->select('destination_user_id', $users['usernames'],// $users['usernames'] is an array
+		array(
+			'id' => 'select2',
+			'style' => '.select2-selection__rendered {color; black !important;}'
+		));
 		echo $this->Form->input('content');
-		echo $this->Form->input('is_deleted_message');
-		echo $this->Form->input('destinetion_user_id');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<?php echo $this->Html->script(array(
+	'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js',
+	'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js',
+)); ?>
 
-		<li><?php echo $this->Html->link(__('List Messages'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+<script>
+$(document).ready(function() {
+    $('#select2').select2();
+	$('#select2').val();
+  });
+  
+</script>

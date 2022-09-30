@@ -29,16 +29,49 @@ class MessagesController extends AppController {
 
 	public function list() {
 		$userId = $this->Auth->user('id');
-		$data = $this->Message->findAllBySenderUserId($userId);
-		$destinetion_user_id = [];
-		foreach ($data as $key => $val) {
-			$destinetion_user_id[] = array_column($data[$key], 'destinetion_user_id');
+		if (!$userId) {
+			return $this->redirect('/users/login');
 		}
-		
-		var_dump($destinetion_user_id);exit;
-		// var_dump($data[0]['Message']['destinetion_user_id']);exit;
-		// $data = $this->Message->findAllByDestinetionUserId($data[0]['Message']['destinetion_user_id']);
+		$data = $this->Message->find('all',array(
+			'conditions' => array(
+			'Message.destination_user_id' => array($userId),
+			// 'Message.sender_user_id' => array($userId),
+			),
+			'order' => array('Message.created' => 'desc'),
+			'group' => 'Message.sender_user_id',
+
+			));
+		// $destinetion_user_id = [];
+		// foreach ($data as $val) {
+		// 	$destinetion_user_id[] = $val['Message']['destination_user_id'];
+		// }
+		// var_dump($data);exit;
 		$this->set('message', $data);
+	}
+
+	public function detail($senderId) {
+		$userId = $this->Auth->user('id');
+		if ($this->request->is('post')) {
+			$this->Message->create();
+			if ($this->Message->save($this->request->data)) {
+				$this->Flash->success(__('The message has been saved.'));
+				return $this->redirect('/messages/detail');
+			} else {
+				$this->Flash->error(__('The message could not be saved. Please, try again.'));
+			}
+		}
+
+		$data = $this->Message->find('all',array(
+			'conditions' => array(
+			'Message.destination_user_id' => array($userId, $senderId),
+			'Message.sender_user_id' => array($senderId, $userId),
+			),
+			'order' => array('Message.created' => 'desc'),
+
+			));
+			rsort($data);
+			// var_dump($data);exit;
+		$this->set(array('message' => $data, 'senderId' => $senderId));
 	}
 
 /**
@@ -66,13 +99,19 @@ class MessagesController extends AppController {
 			$this->Message->create();
 			if ($this->Message->save($this->request->data)) {
 				$this->Flash->success(__('The message has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect('list');
 			} else {
 				$this->Flash->error(__('The message could not be saved. Please, try again.'));
 			}
 		}
-		$users = $this->Message->User->find('list');
-		$this->set(compact('users'));
+		$users = $this->Message->User->find('all');
+		$userInfo = [];
+		foreach ($users as $key => $val) {
+			// $userInfo[$key]['destination_user_id'] = $val['User']['id'];
+			// $userInfo[$key]['username'] = $val['User']['username'];
+			$userInfo['usernames'][] = $val['User']['username'];
+		}
+		$this->set('users', $userInfo);
 	}
 
 /**
