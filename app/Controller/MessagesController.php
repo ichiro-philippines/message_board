@@ -49,13 +49,18 @@ class MessagesController extends AppController {
 		$this->set('message', $data);
 	}
 
-	public function detail($senderId) {
+	public function detail($senderId=null) {
+		// var_dump($this->params['param1']);exit;
+		if ($this->params['param1']) {
+			$senderId = $this->params['param1'];
+		}
+		
 		$userId = $this->Auth->user('id');
 		if ($this->request->is('post')) {
 			$this->Message->create();
 			if ($this->Message->save($this->request->data)) {
 				$this->Flash->success(__('The message has been saved.'));
-				return $this->redirect('/messages/detail');
+				return $this->redirect('/messages/detail/' . $senderId);
 			} else {
 				$this->Flash->error(__('The message could not be saved. Please, try again.'));
 			}
@@ -105,12 +110,18 @@ class MessagesController extends AppController {
 			}
 		}
 		$users = $this->Message->User->find('all');
-		$userInfo = [];
+		// $userInfo = [];
+		$usernames = [];
+		$destination_user_ids = [];
 		foreach ($users as $key => $val) {
 			// $userInfo[$key]['destination_user_id'] = $val['User']['id'];
 			// $userInfo[$key]['username'] = $val['User']['username'];
-			$userInfo['usernames'][] = $val['User']['username'];
+			$usernames[] = $val['User']['username'];
+			$destination_user_ids[] = $val['User']['id'];
 		}
+		$userInfo = array_combine($destination_user_ids, $usernames);
+		// var_dump($userInfo);exit;
+
 		$this->set('users', $userInfo);
 	}
 

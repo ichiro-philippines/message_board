@@ -2,12 +2,11 @@
 <?php
     echo $this->Html->css('message');
 ?>
-<h1>Message List</h1>
+<h1>Message Detail</h1>
 <?php  
-
-    // echo $this->Html->link(
-    //     'New Message',
-    //     array('controller' => 'messages', 'action' => 'add'));
+    echo $this->Html->link(
+        'Go List',
+        array('controller' => 'messages', 'action' => 'list'));
 ?>
 <?php echo $this->Form->create('Message'); ?>
 	<fieldset>
@@ -33,7 +32,7 @@
     <?php foreach ($message as $key => $sender): ?>
     <li class="list-item" id="<?php echo $key; ?>">
     <?php if (AuthComponent::user('id') == $sender['Message']['sender_user_id']): ?>
-    <div class="message-box detail-box" id="message">
+    <div class="message-box detail-box" id="message<?php echo $key; ?>">
     <?php else: ?>
     <div class="message-box">
     <?php endif; ?>
@@ -82,13 +81,16 @@ $(function() {
       $('.list-btn').addClass('is-btn-hidden');
   }
 });
-
-$('#message').on('click', function() {
-    if (confirm('Do you want to delete this message?')) {
-        var id = $(this).attr('id');
-        $('#'+id).addClass('display-none');
-  } else {
-    return false
-  }
+$(function() {
+    var list = $(".list li").length;  
+    for(let i = 0; i < list; i++) {
+    $('#message'+i).on('click', function() {
+        if (confirm('Do you want to delete this message?')) {
+            $('#'+i).addClass('display-none');
+        } else {
+            return false
+        }
+    });
+    }
 });
 </script>

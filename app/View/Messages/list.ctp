@@ -12,7 +12,7 @@
 <?php 
     foreach ($message as $key => $sender): ?>
     <li class="list-item list-item-list" id="<?php echo $key; ?>">
-    <div class="message-box" id="message">
+    <div class="message-box" id="message<?php echo $key; ?>">
         <div class="message-box-left">
             <?php 
                 $picture = 'pictures/' . $sender['User']['picture'];
@@ -32,7 +32,7 @@
     <?php  
     echo $this->Html->link(
         'Go detail',
-        array('controller' => 'messages', 'action' => 'detail', $sender['User']['id']));
+        array('controller' => 'messages', 'action' => 'detail', 'param1' => $sender['User']['id']));
     ?>
     </li>
 <?php endforeach; ?>
@@ -62,12 +62,16 @@ $(function() {
       $('.list-btn').addClass('is-btn-hidden');
   }
 });
-$('#message').on('click', function() {
-    if (confirm('Do you want to delete this message?')) {
-        var id = $(this).attr('id');console.log($(this).attr('id'));
-        $('#'+id).addClass('display-none');
-  } else {
-    return false
-  }
+$(function() {
+    var list = $(".list li").length;  
+    for(let i = 0; i < list; i++) {
+    $('#message'+i).on('click', function() {
+        if (confirm('Do you want to delete this message?')) {
+            $('#'+i).addClass('display-none');
+        } else {
+            return false
+        }
+    });
+    }
 });
 </script>

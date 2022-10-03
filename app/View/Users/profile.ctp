@@ -22,10 +22,10 @@
 <?php
 if (AuthComponent::user('id') === $user['User']['id']) {
     echo $this->Html->link(
-        'picture',
+        'Edit Profile',
         array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
 }
 echo '<br>';
 echo $this->Html->link(
-    'toppage', array('controller' => 'posts', 'action' => 'index'));
+    'Go List page', array('controller' => 'messages', 'action' => 'list'));
 ?>

@@ -4,7 +4,7 @@
 	}
 </style>
 <div class="messages form">
-<?php echo $this->Form->create('Message'); ?>
+<?php  echo $this->Form->create('Message'); ?>
 	<fieldset>
 		<legend><?php echo __('New Message'); ?></legend>
 	<?php
@@ -12,10 +12,9 @@
 		'type' => 'hidden',
 		'value' => AuthComponent::user('id')
 	    ));
-		echo $this->Form->select('destination_user_id', $users['usernames'],// $users['usernames'] is an array
+		echo $this->Form->select('destination_user_id', $users,// $users['usernames'] is an array
 		array(
 			'id' => 'select2',
-			'style' => '.select2-selection__rendered {color; black !important;}'
 		));
 		echo $this->Form->input('content');
 	?>
